@@ -1,6 +1,9 @@
+import KitchenDashboard from './pages/kitchen/KitchenDashboard';
+
 function App() {
   return (
     <>
+      <KitchenDashboard />
     </>
   );
 }
