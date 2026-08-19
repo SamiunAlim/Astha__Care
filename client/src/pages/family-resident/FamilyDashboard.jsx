@@ -1,0 +1,15 @@
+import { useEffect, useState } from 'react';
+import { Activity, Calendar, CreditCard, Pill } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext.jsx';
+
+export default function FamilyDashboard(){
+ const {user,api}=useAuth(); const id=user?.residentId; const [state,setState]=useState({vitals:[],appointments:[],billing:[],medications:[],activities:[]}); const [loading,setLoading]=useState(true);
+ useEffect(()=>{if(!id){setLoading(false);return;} Promise.allSettled([api.get(`/vitals/${id}`),api.get(`/appointments/${id}`),api.get(`/billing/${id}`),api.get(`/medications/${id}`),api.get(`/activities/${id}`)]).then(r=>setState({vitals:r[0].status==='fulfilled'?r[0].value.data:[],appointments:r[1].status==='fulfilled'?r[1].value.data:[],billing:r[2].status==='fulfilled'?r[2].value.data:[],medications:r[3].status==='fulfilled'?r[3].value.data:[],activities:r[4].status==='fulfilled'?r[4].value.data:[]})).finally(()=>setLoading(false));},[api,id]);
+ if(loading)return <div className="p-8 text-gray-500">Loading family dashboard...</div>;
+ const latest=state.vitals[0]; const next=state.appointments.find(a=>a.status==='scheduled'); const due=state.billing.filter(b=>b.status!=='paid').reduce((s,b)=>s+(b.amount||0),0);
+ return <div className="space-y-6 max-w-7xl mx-auto"><div className="card p-6 md:p-8"><h1 className="text-2xl font-extrabold">Family Dashboard</h1><p className="text-gray-500 mt-1">Live information for your linked resident account.</p></div>
+ <div className="grid md:grid-cols-4 gap-4"><Stat icon={Activity} title="Latest Vital" value={latest?`${latest.value} ${latest.unit||''}`:'No data'}/><Stat icon={Calendar} title="Next Appointment" value={next?.doctorName||'No data'}/><Stat icon={CreditCard} title="Current Due" value={`৳${due.toLocaleString()}`}/><Stat icon={Pill} title="Active Medications" value={String(state.medications.filter(m=>m.status==='active').length)}/></div>
+ <div className="grid lg:grid-cols-2 gap-6"><div className="card p-6"><h3 className="text-lg font-bold mb-5">Recent Health Records</h3>{state.vitals.length===0?<Empty/>:<div className="space-y-3">{state.vitals.slice(0,8).map(v=><div key={v._id} className="flex justify-between border-b border-gray-50 pb-3"><span>{v.type}</span><span className="font-semibold">{v.value} {v.unit}</span></div>)}</div>}</div><div className="card p-6"><h3 className="text-lg font-bold mb-5">Recent Activities</h3>{state.activities.length===0?<Empty/>:<div className="space-y-3">{state.activities.slice(0,6).map(a=><div key={a._id}><p className="font-semibold text-sm">{a.title}</p><p className="text-sm text-gray-500">{a.description}</p></div>)}</div>}</div></div></div>
+}
+function Stat({icon:Icon,title,value}){return <div className="card p-5"><Icon size={20} className="text-brand-600 mb-3"/><p className="text-xs uppercase text-gray-400 font-semibold">{title}</p><p className="text-xl font-extrabold mt-1">{value}</p></div>}
+function Empty(){return <p className="text-sm text-gray-400">No records are available yet.</p>}
