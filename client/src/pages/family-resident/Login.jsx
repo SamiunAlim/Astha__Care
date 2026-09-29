@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Heart, Users, Loader2 } from 'lucide-react';
+import { Heart, Users, Loader2, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext.jsx';
 
 export default function Login() {
@@ -23,14 +23,23 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-brand-50 to-blue-50 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-brand-50 to-blue-50 p-4 relative">
       <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-brand-700 rounded-2xl mb-4 shadow-xl shadow-brand-700/20">
-            <Heart className="text-white" size={32} />
-          </div>
-          <h1 className="text-3xl font-extrabold text-gray-900">Aastha Care</h1>
-          <p className="text-gray-500 mt-2 text-sm">Elderly Care Management System</p>
+        <div className="mb-4">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-500 hover:text-brand-700 transition-colors"
+          >
+            <ArrowLeft size={14} /> Back to Homepage
+          </Link>
+        </div>
+
+        <div className="text-center mb-6">
+          <Link to="/" className="inline-flex items-center justify-center w-14 h-14 bg-brand-700 rounded-2xl mb-3 shadow-lg shadow-brand-700/20 hover:scale-105 transition-transform">
+            <Heart className="text-white" size={28} />
+          </Link>
+          <h1 className="text-2xl font-extrabold text-gray-900">Aastha Care</h1>
+          <p className="text-gray-500 mt-1 text-xs">Elderly Care Management System</p>
         </div>
 
         <div className="bg-white rounded-3xl shadow-xl p-8 border border-gray-100">

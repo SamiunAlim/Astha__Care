@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Heart, Loader2 } from 'lucide-react';
+import { Heart, Loader2, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext.jsx';
 
 export default function Register() {
@@ -23,12 +23,23 @@ export default function Register() {
   const update = (key, value) => setForm(prev => ({ ...prev, [key]: value }));
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-brand-50 to-blue-50 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-brand-50 to-blue-50 p-4 relative">
       <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-8 border border-gray-100">
-        <div className="text-center mb-7">
-          <div className="inline-flex items-center justify-center w-14 h-14 bg-brand-700 rounded-2xl mb-3"><Heart className="text-white" size={28} /></div>
+        <div className="mb-4">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-500 hover:text-brand-700 transition-colors"
+          >
+            <ArrowLeft size={14} /> Back to Homepage
+          </Link>
+        </div>
+
+        <div className="text-center mb-6">
+          <Link to="/" className="inline-flex items-center justify-center w-14 h-14 bg-brand-700 rounded-2xl mb-3 shadow-lg shadow-brand-700/20 hover:scale-105 transition-transform">
+            <Heart className="text-white" size={28} />
+          </Link>
           <h1 className="text-2xl font-extrabold text-gray-900">Create Aastha Care Account</h1>
-          <p className="text-sm text-gray-500 mt-1">Your account will be stored in the real database.</p>
+          <p className="text-xs text-gray-500 mt-1">Your account will be stored securely in the database.</p>
         </div>
 
         {error && <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-red-600 text-sm">{error}</div>}

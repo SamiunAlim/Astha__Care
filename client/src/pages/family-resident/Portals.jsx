@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 const portalList = [
   { name: 'Family Portal', desc: 'View vitals, billing, and communicate with care team', icon: Users, color: 'bg-brand-50 text-brand-600 border-brand-100', path: '/' },
   { name: 'Resident Portal', desc: 'Daily tasks, appointments, medications, and meals', icon: Heart, color: 'bg-rose-50 text-rose-600 border-rose-100', path: '/' },
-  { name: 'Kitchen Portal', desc: 'Meal planning, nutrition tracking, and dietary management', icon: ChefHat, color: 'bg-amber-50 text-amber-600 border-amber-100', path: '/meals' },
+  { name: 'Kitchen Portal', desc: 'Meal planning, nutrition tracking, and dietary management', icon: ChefHat, color: 'bg-amber-50 text-amber-600 border-amber-100', path: '/kitchen' },
   { name: 'Medical Portal', desc: 'Health records, prescriptions, and medical history', icon: Stethoscope, color: 'bg-emerald-50 text-emerald-600 border-emerald-100', path: '/health-records' },
 ];
 
